@@ -1,0 +1,39 @@
+{
+  "dependencies": {
+    "@rails/ujs": "^6.0.0",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.1",
+    "react-bootstrap": "^1.6.3",
+    "react-dom": "^17.0.1",
+    "react-is": "^16.13.1",
+    "react-router-bootstrap": "^0.25.0",
+    "react-router-dom": "^5.3.0",
+    "react_ujs": "^2.6.1",
+    "styled-components": "^5.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/preset-react": "^7.8.3",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
+    "@rails/webpacker": "5.4.2",
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-styled-components": "^1.11.1",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
+    "eslint": "^7.27.0",
+    "eslint-plugin-babel": "^5.3.1",
+    "eslint-plugin-compat": "^3.9.0",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "react-refresh": "0.8.3",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.10.3"
+  },
+  "private": true,
+  "scripts": {
+    "dev": "./bin/webpack-dev-server",
+    "lint": "eslint --cache app/javascript",
+    "lint:fix": "eslint --cache --fix app/javascript"
+  }
+}

@@ -1,0 +1,2 @@
+# Prebuilt/external artifacts that can be ignored.
+app/assets/javascripts/*
