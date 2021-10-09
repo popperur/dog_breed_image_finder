@@ -3,7 +3,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.3'
 
-gem 'pg'
+gem 'sqlite3', '~> 1.4'
+
 gem 'puma', '~> 5.0'
 gem 'rails', '~> 6.1.1'
 gem 'sass-rails', '>= 6'
@@ -17,6 +18,8 @@ gem 'haml-rails'
 
 gem 'react-rails'
 gem 'webpacker', '~> 5.0'
+
+gem 'httparty'
 
 group :development, :test do
   gem 'byebug'
@@ -33,7 +36,7 @@ group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 3.26'
   gem 'selenium-webdriver'
-	gem 'webdrivers', '~> 4.0'
+  gem 'webdrivers', '~> 4.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
