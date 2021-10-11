@@ -5,12 +5,8 @@ import { api } from '@estatesearch'
 import BreedFilter from "./BreedFilter"
 import BreedImage from "./BreedImage"
 
-export default function Page({ masterBreedNames }) {
+export default function Page({ breedNames }) {
   const [loadingImage, setLoadingImage] = useState(false)
-  const filterState = useState({
-      breedName: '',
-    })
-  const [filter] = filterState
   const [breedImageInfo, setBreedImageInfo] = useState({
     masterBreedName: null,
     subBreedName: null,
@@ -18,14 +14,14 @@ export default function Page({ masterBreedNames }) {
     errorMessage: null,
   })
 
-  const updateBreedImage = async () => {
+  const updateBreedImage = async (breedName) => {
     setLoadingImage(true)
     let masterBreedName
     let subBreedName = ''
-    const words = filter.breedName.split(' ')
+    const words = breedName.split(' ')
     if (words.length === 1) {
       // master breed name is defined
-      masterBreedName = filter.breedName
+      masterBreedName = breedName
     } else {
       // first word is the sub, the rest is the master breed
       // irish spaniel
@@ -55,9 +51,8 @@ export default function Page({ masterBreedNames }) {
           <Row>
             <Col>
               <BreedFilter
-                filterState={filterState}
+                breedNames={breedNames}
                 loading={loadingImage}
-                masterBreedNames={masterBreedNames}
                 onUpdateFilter={updateBreedImage}
               />
             </Col>
@@ -67,15 +62,12 @@ export default function Page({ masterBreedNames }) {
             </Col>
           </Row>
         </Col>
-
       </Row>
     </Container>
-
   )
-
 
 }
 
 Page.propTypes = {
-	masterBreedNames: array.isRequired,
+	breedNames: array.isRequired,
 }
