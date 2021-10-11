@@ -2,7 +2,7 @@ class ImageFinderController < ApplicationController
 
   def index
     @master_breed_names = Rails.cache.fetch('master_breed_names', expires_in: 1.day) do
-      DogApiServices::GetMasterBreedNames.call.payload
+      DogApiServices::GetBreedNames.call.payload
     end
   end
 
