@@ -28,9 +28,9 @@ class ImageFinderControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should retrieve an error message for a blank breed name' do
-    response = DogApiServices::GetRandomBreedImage.new({}).call
-    assert_equal response.success?, false
-    assert_equal response.error_message, 'Master breed name is not defined'
+    get random_breed_image_image_finder_index_url, params: {master_breed_name: ''}
+    json = JSON.parse(response.body)
+    assert_equal json['error_message'], 'Master breed name is not defined'
   end
 
   test 'should retrieve an error message for a non-existent breed name' do

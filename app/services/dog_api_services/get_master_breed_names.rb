@@ -1,7 +1,10 @@
 module DogApiServices
 
   class GetMasterBreedNames
+    include Callable
     require 'httparty'
+
+    def initialize; end
 
     def call
       response = HTTParty.get("https://dog.ceo/api/breeds/list/all").parsed_response

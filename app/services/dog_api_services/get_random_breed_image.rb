@@ -1,11 +1,12 @@
 module DogApiServices
 
   class GetRandomBreedImage
+    include Callable
     require 'httparty'
 
-    def initialize(params)
-      @master_breed_name = params[:master_breed_name]
-      @sub_breed_name = params[:sub_breed_name]
+    def initialize(master_breed_name:, sub_breed_name: nil)
+      @master_breed_name = master_breed_name
+      @sub_breed_name = sub_breed_name
     end
 
     def call
