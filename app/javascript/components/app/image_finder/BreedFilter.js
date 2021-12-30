@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import { array, bool, func } from 'prop-types'
 import { Button, Col, Form, Row } from 'react-bootstrap'
 import { Typeahead } from 'react-bootstrap-typeahead'
@@ -20,7 +20,8 @@ export default function BreedFilter({ loading, breedNames, onUpdateFilter }) {
           <Form.Group className='mb-3' controlId='breedName'>
             <Form.Label>Breed Name</Form.Label>
             <Typeahead
-              id='breed_name'
+              id='typeahead_breed_name'
+              inputProps={{id: 'breedName'}}
               onChange={setSelectedBreedNames}
               options={breedNames}
               selected={selectedBreedNames}

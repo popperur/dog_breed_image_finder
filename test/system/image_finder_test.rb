@@ -15,35 +15,23 @@ class ImageFinderTest < ApplicationSystemTestCase
 
   test 'should get random image by master breed name' do
     visit image_finder_index_url
-    fill_in 'Breed Name', with: 'spaniel'
+
+    find('.rbt', match: :first).click # click the typeahead control
+    find('a', text: 'akita', match: :first).click
     click_on 'Submit'
     sleep 2
-    assert_selector '.breed-info', text: 'spaniel'
+    assert_selector '.breed-info', text: 'akita'
   end
 
   test 'should get random image by master + sub-breed name' do
     visit image_finder_index_url
-    fill_in 'Breed Name', with: 'irish spaniel'
-    click_on 'Submit'
-    sleep 2
-    assert_selector '.breed-info', text: 'irish'
-    assert_selector '.breed-info', text: 'spaniel'
-  end
 
-  test 'should show an error if master breed is non-existent' do
-    visit image_finder_index_url
-    fill_in 'Breed Name', with: 'non-existent'
+    find('.rbt', match: :first).click # click the typeahead control
+    find('a', text: 'american terrier', match: :first).click
     click_on 'Submit'
     sleep 2
-    assert_selector '.breed-error', text: 'Breed not found (master breed does not exist)'
-  end
-
-  test 'should show an error if sub-breed is non-existent' do
-    visit image_finder_index_url
-    fill_in 'Breed Name', with: 'dang spaniel'
-    click_on 'Submit'
-    sleep 2
-    assert_selector '.breed-error', text: 'Breed not found (sub breed does not exist)'
+    assert_selector '.breed-info', text: 'american'
+    assert_selector '.breed-info', text: 'terrier'
   end
 
 end
