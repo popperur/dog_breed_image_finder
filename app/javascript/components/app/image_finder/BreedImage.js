@@ -17,7 +17,7 @@ export default function BreedImage({ breedImageInfo }) {
   return (
     <BreedImageRow>
       <Col className='rounded-3 border shadow-lg pb-4'>
-        <h3 className='my-2'>Breed Image</h3>
+        <h3 className='my-2'>Doggo Image</h3>
         {breedImageInfo.errorMessage && <div className='breed-error'>{breedImageInfo.errorMessage}</div>}
         {breedImageInfo.imageUrl &&
           <>

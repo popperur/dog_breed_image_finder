@@ -1,29 +1,60 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { array, bool, func } from 'prop-types'
 import { Button, Col, Form, Row } from 'react-bootstrap'
 import { Typeahead } from 'react-bootstrap-typeahead'
 
 export default function BreedFilter({ loading, breedNames, onUpdateFilter }) {
   const [selectedBreedNames, setSelectedBreedNames] = useState([])
+  const [submittedBreedName, setSubmittedBreedName] = useState(null)
+  const typeaheadRef = useRef(null)
 
-  const isFilterValid = () => Boolean(selectedBreedNames[0])
+  const selectedBreedName = selectedBreedNames[0] // we support single selections only
 
-  const updateFilter = () => {
-    if (selectedBreedNames[0]) onUpdateFilter(selectedBreedNames[0])
+  const updateSelection = (breedNames) => {
+    setSelectedBreedNames(breedNames)
+    setSubmittedBreedName(null)
+  }
+
+  const isFilterValid = () => Boolean(selectedBreedName)
+
+  const updateFilter = (selectedBreedName) => {
+    if (selectedBreedName) {
+      onUpdateFilter(selectedBreedName)
+      setSubmittedBreedName(selectedBreedName)
+    }
+  }
+
+  const onTypeaheadMenuToggle = (isOpen) => {
+    if (!isOpen) {
+      updateFilter(typeaheadRef.current.state.selected[0])
+    }
+  }
+
+  const onTypeaheadKeyDown = (event) => {
+    if (event.keyCode === 13) {
+      updateFilter(typeaheadRef.current.state.selected[0])
+    }
+  }
+
+  const onSubmitClick = () => {
+    updateFilter(selectedBreedName)
   }
 
   return (
     <Row>
       <Col className='rounded-3 border shadow-lg pb-4'>
-        <h3 className='my-2'>Filter</h3>
+        <h3 className='my-2'>Doggo Filter</h3>
         <Form autoComplete='off'>
           <Form.Group className='mb-3' controlId='breedName'>
             <Form.Label>Breed Name</Form.Label>
             <Typeahead
               id='typeahead_breed_name'
               inputProps={{id: 'breedName'}}
-              onChange={setSelectedBreedNames}
+              onChange={updateSelection}
+              onKeyDown={onTypeaheadKeyDown}
+              onMenuToggle={onTypeaheadMenuToggle}
               options={breedNames}
+              ref={typeaheadRef}
               selected={selectedBreedNames}
             />
             <Form.Text className='text-muted'>Examples: spaniel, irish spaniel, hound, basset hound </Form.Text>
@@ -32,10 +63,10 @@ export default function BreedFilter({ loading, breedNames, onUpdateFilter }) {
         <Button
           className='float-end'
           disabled={loading || !isFilterValid()}
-          onClick={updateFilter}
+          onClick={onSubmitClick}
           type='button'
           variant='success'
-        >Submit
+        >{submittedBreedName ? 'Show me one more!' : 'Show me!'}
         </Button>
 
         <div className='m-2' />
