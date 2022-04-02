@@ -43,7 +43,8 @@ module.exports = function(api) {
           development: isDevelopmentEnv || isTestEnv,
           useBuiltIns: true,
         },
-      ],
+      ],,
+      ['@babel/preset-typescript', { 'allExtensions': true, 'isTSX': true }]
     ].filter(Boolean),
     plugins: [
       'babel-plugin-macros',
@@ -86,12 +87,6 @@ module.exports = function(api) {
         '@babel/plugin-transform-regenerator',
         {
           async: false,
-        },
-      ],
-      isProductionEnv && [
-        'babel-plugin-transform-react-remove-prop-types',
-        {
-          removeImport: true,
         },
       ],
     ].filter(Boolean),

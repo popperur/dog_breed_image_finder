@@ -1,7 +1,7 @@
 import {Col, Row} from "react-bootstrap"
 import React from "react"
-import { shape, string } from "prop-types"
 import styled from "styled-components"
+import { BreedImageInfo} from "./interface";
 
 const BreedImageRow = styled(Row)`
   .breed-image {
@@ -13,7 +13,12 @@ const BreedImageRow = styled(Row)`
     font-size: 12px;
   }
 `
-export default function BreedImage({ breedImageInfo }) {
+
+type BreedImageProps = {
+  breedImageInfo: BreedImageInfo
+}
+
+const BreedImage = ({ breedImageInfo }:BreedImageProps) => {
   return (
     <BreedImageRow>
       <Col className='rounded-3 border shadow-lg pb-4'>
@@ -29,15 +34,6 @@ export default function BreedImage({ breedImageInfo }) {
       </Col>
     </BreedImageRow>
   )
-
 }
 
-BreedImage.propTypes = {
-  breedImageInfo: shape({
-    masterBreedName: string,
-    subBreedName: string,
-    imageUrl: string,
-    errorMessage: string,
-  }),
-}
-
+export default BreedImage

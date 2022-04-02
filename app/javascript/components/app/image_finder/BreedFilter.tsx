@@ -1,39 +1,45 @@
 import React, { useRef, useState } from 'react'
-import { array, bool, func } from 'prop-types'
 import { Button, Col, Form, Row } from 'react-bootstrap'
-import { Typeahead } from 'react-bootstrap-typeahead'
+import {Typeahead, TypeaheadState} from 'react-bootstrap-typeahead'
 
-export default function BreedFilter({ loading, breedNames, onUpdateFilter }) {
-  const [selectedBreedNames, setSelectedBreedNames] = useState([])
-  const [submittedBreedName, setSubmittedBreedName] = useState(null)
+
+type BreedFilterProps = {
+  loading: boolean
+  breedNames: string[]
+  onUpdateFilter: (breedName: string) => void
+}
+
+const BreedFilter = ({ loading, breedNames, onUpdateFilter }:BreedFilterProps) => {
+  const [selectedBreedNames, setSelectedBreedNames] = useState<string[]>([])
+  const [submittedBreedName, setSubmittedBreedName] = useState<string | null>(null)
   const typeaheadRef = useRef(null)
 
   const selectedBreedName = selectedBreedNames[0] // we support single selections only
 
-  const updateSelection = (breedNames) => {
+  const updateSelection = (breedNames:string[]) => {
     setSelectedBreedNames(breedNames)
     setSubmittedBreedName(null)
   }
 
   const isFilterValid = () => Boolean(selectedBreedName)
 
-  const updateFilter = (selectedBreedName) => {
+  const updateFilter = (selectedBreedName:string) => {
     if (selectedBreedName) {
       onUpdateFilter(selectedBreedName)
       setSubmittedBreedName(selectedBreedName)
     }
   }
 
-  const onTypeaheadMenuToggle = (isOpen) => {
-    if (!isOpen) {
-      updateFilter(typeaheadRef.current.state.selected[0])
-    }
+  const getTypeaheadInnerState = ():TypeaheadState<string> => {
+    return typeaheadRef.current.state
   }
 
-  const onTypeaheadKeyDown = (event) => {
-    if (event.keyCode === 13) {
-      updateFilter(typeaheadRef.current.state.selected[0])
-    }
+  const onTypeaheadMenuToggle = (isOpen:boolean) => {
+    if (!isOpen) updateFilter(getTypeaheadInnerState().selected[0])
+  }
+
+  const onTypeaheadKeyDown = (event: KeyboardEvent) => {
+    if (event.code === 'Enter') updateFilter(getTypeaheadInnerState().selected[0])
   }
 
   const onSubmitClick = () => {
@@ -68,21 +74,10 @@ export default function BreedFilter({ loading, breedNames, onUpdateFilter }) {
           variant='success'
         >{submittedBreedName ? 'Show me one more!' : 'Show me!'}
         </Button>
-
-        <div className='m-2' />
       </Col>
     </Row>
   )
 
 }
 
-BreedFilter.defaultProps = {
-	breedNames: [],
-}
-
-BreedFilter.propTypes = {
-  breedNames: array,
-  loading: bool.isRequired,
-  onUpdateFilter: func.isRequired,
-}
-
+export default BreedFilter

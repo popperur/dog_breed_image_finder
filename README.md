@@ -2,10 +2,11 @@
 
 This project is my solution for the [Estatesearch Coding Challenge](doc/Estatesearch_Coding_Challenge_Instruction.pdf) .
 
-Used technologies:
-- ruby/rails
-- react
-- react-bootstrap
+Tech Stack:
+- rails 6
+- react 17.0
+- typescript 4.6
+- bootstrap, axios, styled-components, typeahead
 
 [Live demo is available under Heroku.](https://popperur-db-image-finder.herokuapp.com/)
 

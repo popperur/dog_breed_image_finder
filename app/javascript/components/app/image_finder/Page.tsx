@@ -1,22 +1,27 @@
 import React, { useState } from 'react'
-import { array } from 'prop-types'
 import { Col, Container, Row } from 'react-bootstrap'
-import { api } from '@estatesearch'
+import axios from 'axios'
 import BreedFilter from "./BreedFilter"
 import BreedImage from "./BreedImage"
+import { BreedImageInfo} from "./interface";
 
-export default function Page({ breedNames }) {
-  const [loadingImage, setLoadingImage] = useState(false)
-  const [breedImageInfo, setBreedImageInfo] = useState({
+
+type PageProps = {
+  breedNames: string[]
+}
+
+const Page = ({ breedNames }:PageProps) => {
+  const [loadingImage, setLoadingImage] = useState<boolean>(false)
+  const [breedImageInfo, setBreedImageInfo] = useState<BreedImageInfo>({
     masterBreedName: null,
     subBreedName: null,
     imageUrl: null,
     errorMessage: null,
   })
 
-  const updateBreedImage = async (breedName) => {
+  const updateBreedImage = async (breedName:string) => {
     setLoadingImage(true)
-    let masterBreedName
+    let masterBreedName:string
     let subBreedName = ''
     const words = breedName.split(' ')
     if (words.length === 1) {
@@ -29,18 +34,26 @@ export default function Page({ breedNames }) {
       masterBreedName = words.join(' ')
     }
 
-    const response = await api.get('/image_finder/random_breed_image', {
-      master_breed_name: masterBreedName,
-      sub_breed_name: subBreedName,
+    const response = await axios.get('/image_finder/random_breed_image', {
+      params: {
+        master_breed_name: masterBreedName,
+        sub_breed_name: subBreedName,
+      }
     })
+    let errorMessage:string
+    let imageUrl = null
+    if (response.status === 200) {
+      imageUrl = response.data.image_url
+      errorMessage = response.data.error_message
+    } else {
+      errorMessage = `Request failed, status: ${response.status}`
+    }
     setLoadingImage(false)
-    setBreedImageInfo({
-      ...breedImageInfo,
-      masterBreedName,
-      subBreedName,
-      imageUrl: response.image_url,
-      errorMessage: response.error_message,
-    })
+    setBreedImageInfo({...breedImageInfo, masterBreedName, subBreedName, imageUrl, errorMessage})
+  }
+
+  const onUpdateFilter = (breedName: string) => {
+    void updateBreedImage(breedName)
   }
 
   return (
@@ -53,7 +66,7 @@ export default function Page({ breedNames }) {
               <BreedFilter
                 breedNames={breedNames}
                 loading={loadingImage}
-                onUpdateFilter={updateBreedImage}
+                onUpdateFilter={onUpdateFilter}
               />
             </Col>
             <Col md={1} />
@@ -65,9 +78,6 @@ export default function Page({ breedNames }) {
       </Row>
     </Container>
   )
-
 }
 
-Page.propTypes = {
-	breedNames: array.isRequired,
-}
+export default Page
