@@ -9,8 +9,8 @@ class ImageFinderTest < ApplicationSystemTestCase
 
   test 'should display components' do
     visit image_finder_index_url
-    assert_selector 'h3', text: /\AFilter\z/
-    assert_selector 'h3', text: /\ABreed Image\z/
+    assert_selector 'h3', text: /\ADoggo Filter\z/
+    assert_selector 'h3', text: /\ADoggo Image\z/
   end
 
   test 'should get random image by master breed name' do
@@ -18,7 +18,6 @@ class ImageFinderTest < ApplicationSystemTestCase
 
     find('.rbt', match: :first).click # click the typeahead control
     find('a', text: 'akita', match: :first).click
-    click_on 'Submit'
     sleep 2
     assert_selector '.breed-info', text: 'akita'
   end
@@ -28,7 +27,6 @@ class ImageFinderTest < ApplicationSystemTestCase
 
     find('.rbt', match: :first).click # click the typeahead control
     find('a', text: 'american terrier', match: :first).click
-    click_on 'Submit'
     sleep 2
     assert_selector '.breed-info', text: 'american'
     assert_selector '.breed-info', text: 'terrier'
