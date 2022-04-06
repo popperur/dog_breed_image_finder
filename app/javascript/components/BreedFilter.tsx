@@ -1,18 +1,30 @@
-import React, { useRef, useState } from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap'
 import {Typeahead, TypeaheadState} from 'react-bootstrap-typeahead'
+import axios from 'axios'
 
 
 type BreedFilterProps = {
   loading: boolean
-  breedNames: string[]
   onUpdateFilter: (breedName: string) => void
 }
 
-const BreedFilter = ({ loading, breedNames, onUpdateFilter }:BreedFilterProps) => {
+const BreedFilter = ({ loading, onUpdateFilter }:BreedFilterProps) => {
+  const [breedNames, setBreedNames] = useState<string[]>([])
   const [selectedBreedNames, setSelectedBreedNames] = useState<string[]>([])
   const [submittedBreedName, setSubmittedBreedName] = useState<string | null>(null)
   const typeaheadRef = useRef(null)
+
+  const fetchBreedNames = async () => {
+    const response = await axios.get('/breeds')
+    if (response.status === 200) {
+      setBreedNames(response.data.breed_names)
+    }
+  }
+
+  useEffect(() => {
+    void fetchBreedNames()
+  }, [])
 
   const selectedBreedName = selectedBreedNames[0] // we support single selections only
 

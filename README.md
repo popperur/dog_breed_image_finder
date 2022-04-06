@@ -4,7 +4,7 @@ This project is my solution for the [Estatesearch Coding Challenge](doc/Estatese
 
 Tech Stack:
 - rails 6
-- react 17.0
+- react 18
 - typescript 4.6
 - bootstrap, axios, styled-components, typeahead
 
@@ -39,4 +39,4 @@ HMR is setup through [pmmmwh's plugin](https://github.com/pmmmwh/react-refresh-w
 * Based on eslint ([docs](https://eslint.org/))
 * `yarn install` to install tools
 * `yarn lint` to lint once
-* `yarn run lint:fix` to fix errors
+

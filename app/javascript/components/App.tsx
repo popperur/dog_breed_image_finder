@@ -5,12 +5,7 @@ import BreedFilter from "./BreedFilter"
 import BreedImage from "./BreedImage"
 import { BreedImageInfo} from "./interface";
 
-
-type PageProps = {
-  breedNames: string[]
-}
-
-const Page = ({ breedNames }:PageProps) => {
+const App = () => {
   const [loadingImage, setLoadingImage] = useState<boolean>(false)
   const [breedImageInfo, setBreedImageInfo] = useState<BreedImageInfo>({
     masterBreedName: null,
@@ -34,7 +29,7 @@ const Page = ({ breedNames }:PageProps) => {
       masterBreedName = words.join(' ')
     }
 
-    const response = await axios.get('/image_finder/random_breed_image', {
+    const response = await axios.get('/breeds/random_image', {
       params: {
         master_breed_name: masterBreedName,
         sub_breed_name: subBreedName,
@@ -46,7 +41,7 @@ const Page = ({ breedNames }:PageProps) => {
       imageUrl = response.data.image_url
       errorMessage = response.data.error_message
     } else {
-      errorMessage = `Request failed, status: ${response.status}`
+      errorMessage = `Getting random image failed, status: ${response.status}`
     }
     setLoadingImage(false)
     setBreedImageInfo({...breedImageInfo, masterBreedName, subBreedName, imageUrl, errorMessage})
@@ -64,7 +59,6 @@ const Page = ({ breedNames }:PageProps) => {
           <Row>
             <Col>
               <BreedFilter
-                breedNames={breedNames}
                 loading={loadingImage}
                 onUpdateFilter={onUpdateFilter}
               />
@@ -80,4 +74,4 @@ const Page = ({ breedNames }:PageProps) => {
   )
 }
 
-export default Page
+export default App

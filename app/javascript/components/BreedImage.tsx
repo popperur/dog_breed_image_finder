@@ -9,9 +9,6 @@ const BreedImageRow = styled(Row)`
     height: auto;
     max-height: 300px;
   }
-  .breed-info, .breed-error {
-    font-size: 12px;
-  }
 `
 
 type BreedImageProps = {
@@ -24,6 +21,8 @@ const BreedImage = ({ breedImageInfo }:BreedImageProps) => {
       <Col className='rounded-3 border shadow-lg pb-4'>
         <h3 className='my-2'>Doggo Image</h3>
         {breedImageInfo.errorMessage && <div className='breed-error'>{breedImageInfo.errorMessage}</div>}
+        {!breedImageInfo.imageUrl && !breedImageInfo.errorMessage &&
+          <div>Use the filter to get a random image!</div>}
         {breedImageInfo.imageUrl &&
           <>
             <div className='breed-info'><strong>Master Breed:</strong> {breedImageInfo.masterBreedName}</div>

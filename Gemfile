@@ -16,7 +16,6 @@ gem 'dotenv-rails'
 gem 'haml'
 gem 'haml-rails'
 
-gem 'react-rails'
 gem 'webpacker', '~> 5.0'
 
 group :development, :test do

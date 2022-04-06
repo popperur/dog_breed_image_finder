@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
 
-  resources :image_finder, only: [:index] do
-    collection do
-      get 'random_breed_image'
-    end
+  resources :home, only: [:index]
+
+  resources :breeds, only: [:index] do
+    get :random_image, on: :collection
   end
 
-  root 'image_finder#index'
+
+  root 'home#index'
 
 end
