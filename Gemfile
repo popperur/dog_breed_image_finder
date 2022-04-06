@@ -19,8 +19,6 @@ gem 'haml-rails'
 gem 'react-rails'
 gem 'webpacker', '~> 5.0'
 
-gem 'httparty'
-
 group :development, :test do
   gem 'byebug'
 end

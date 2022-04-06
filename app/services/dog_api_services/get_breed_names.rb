@@ -2,16 +2,19 @@ module DogApiServices
 
   class GetBreedNames
     include Callable
-    require 'httparty'
 
     def initialize(only_master: false)
       @only_master = only_master
     end
 
     def call
-      response = HTTParty.get("https://dog.ceo/api/breeds/list/all").parsed_response
-      OpenStruct.new(success?: true, payload: breed_names(response))
-    rescue HTTParty::Error => exn
+      response = Net::HTTP.get_response(URI('https://dog.ceo/api/breeds/list/all'))
+      if response.code != '200'
+        raise "Request failed, code: #{response.code}, message: #{response.message}."
+      end
+      data = JSON.parse(response.body)
+      OpenStruct.new(success?: true, payload: breed_names(data))
+    rescue StandardError => exn
       OpenStruct.new(success?: false, error_message: exn.message)
     end
 
