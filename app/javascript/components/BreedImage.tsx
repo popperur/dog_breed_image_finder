@@ -1,7 +1,7 @@
 import {Col, Row} from "react-bootstrap"
 import React from "react"
 import styled from "styled-components"
-import { BreedImageInfo} from "./interface";
+import { BreedImageInfo} from "../interface";
 
 const BreedImageRow = styled(Row)`
   .breed-image {

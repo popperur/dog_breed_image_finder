@@ -1,7 +1,7 @@
-import React, {useEffect, useRef, useState} from 'react'
-import { Button, Col, Form, Row } from 'react-bootstrap'
-import {Typeahead, TypeaheadState} from 'react-bootstrap-typeahead'
-import axios from 'axios'
+import React, {useEffect, useRef, useState} from "react"
+import { Button, Col, Form, Row } from "react-bootstrap"
+import {Typeahead, TypeaheadState} from "react-bootstrap-typeahead"
+import axios from "axios"
 
 
 type BreedFilterProps = {

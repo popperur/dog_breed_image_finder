@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import axios from 'axios'
-import BreedFilter from "./BreedFilter"
-import BreedImage from "./BreedImage"
-import { BreedImageInfo} from "./interface";
+import BreedFilter from "../components/BreedFilter"
+import BreedImage from "../components/BreedImage"
+import { BreedImageInfo } from "../interface";
 
-const App = () => {
+const Home = () => {
   const [loadingImage, setLoadingImage] = useState<boolean>(false)
   const [breedImageInfo, setBreedImageInfo] = useState<BreedImageInfo>({
     masterBreedName: null,
@@ -74,4 +74,4 @@ const App = () => {
   )
 }
 
-export default App
+export default Home
